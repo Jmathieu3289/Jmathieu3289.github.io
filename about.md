@@ -14,6 +14,6 @@ Besides work I enjoy traveling, including recent trips to Yellowstone and the Gr
 
 ### Contact Me
 
-[http://codepen.io/Jmathieu/full/NqwjMb/](Online Resume)
+[Online Resume](http://codepen.io/Jmathieu/full/NqwjMb/)
 
 [justin.a.mathieu@gmail.com](mailto:justin.a.mathieu@gmail.com)
