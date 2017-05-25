@@ -3,7 +3,7 @@ layout: post
 title: Setting up a Jekyll blog
 ---
 
-It seems fitting that my first post is about actually getting this blog up and running. 
+It seems fitting that my first post is about actually getting this blog up and running...
 
 [Github Pages](https://pages.github.com/) is a nice service for setting up a simple static site, and it seemed fitting to host a blog here and have it tied directly into my Github account. Simplicity is key, and having another account to manage for some other blog site or a personal website seemed a bit overkill. 
 
@@ -15,19 +15,19 @@ The process for getting a project up and running seemed easy enough, but before 
 
 The Docker setup was pretty easy, using the official [Ubuntu](https://hub.docker.com/_/ubuntu/) image, there wasn't too much work to do other than mounting a volume for my project and forwarding port 4000, the default port jekyll uses for its built in development server.
 
-{% highlight Powershell %}
+{% highlight %}
 docker run -p 8080:4000 -v "C:\Users\Justin\Documents\Github\Jmathieu3289.github.io":/var/jekyll --name jekyll ubuntu:16.04
 {% endhighlight %}
 
 This starts a Docker container with the name jekyll using ubuntu:16.04 as the base image. To explain the other flags...
 
-{% highlight Powershell %}
+{% highlight %}
 -p 8080:4000 
 {% endhighlight %}
 
 ...to publish the server's port 4000 to my local port 8080, so that I can access the Jekyll site from a web browser, and...
 
-{% highlight Powershell %}
+{% highlight %}
 -v "C:\Users\Justin\Documents\Github\Jmathieu3289.github.io":/var/jekyll
 {% endhighlight %}
 
