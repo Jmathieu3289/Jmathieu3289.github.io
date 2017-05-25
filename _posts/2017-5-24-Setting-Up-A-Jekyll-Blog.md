@@ -15,19 +15,19 @@ The process for getting a project up and running seemed easy enough, but before 
 
 The Docker setup was pretty easy, using the official [Ubuntu](https://hub.docker.com/_/ubuntu/) image, there wasn't too much work to do other than mounting a volume for my project and forwarding port 4000, the default port jekyll uses for its built in development server.
 
-{% highlight %}
+{% highlight Powershell %}
 docker run -p 8080:4000 -v "C:\Users\Justin\Documents\Github\Jmathieu3289.github.io":/var/jekyll --name jekyll ubuntu:16.04
 {% endhighlight %}
 
 This starts a Docker container with the name jekyll using ubuntu:16.04 as the base image. To explain the other flags...
 
-{% highlight %}
+{% highlight Powershell %}
 -p 8080:4000 
 {% endhighlight %}
 
 ...to publish the server's port 4000 to my local port 8080, so that I can access the Jekyll site from a web browser, and...
 
-{% highlight %}
+{% highlight Powershell %}
 -v "C:\Users\Justin\Documents\Github\Jmathieu3289.github.io":/var/jekyll
 {% endhighlight %}
 
