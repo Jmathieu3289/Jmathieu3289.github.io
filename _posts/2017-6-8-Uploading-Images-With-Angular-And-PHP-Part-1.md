@@ -62,3 +62,32 @@ When a user selects a file, it now gets resized to 1000x1000 and displayed in th
 
 ### File Uploading
 
+After everything on the HTML side is good to go, the last step was to get the file uploaded. The ng-file-upload directive comes with a service for just that. Similar to the Angular $http service, a url, method, and the data to be sent must all be provided, and a promise is returned. The code looked like this:
+
+{% highlight Javascript %}
+Upload.upload({
+    url: $scope.selectedItem.id==null?"/api/item/save":"/api/item/save/"+$scope.selectedItem.id,
+    method: $scope.selectedItem.id==null?"POST":"POST",
+    data: {
+        file: $scope.file,
+        data: $scope.selectedItem
+    }
+}).then(function (response) {
+    if(response.data.errors == null){
+        $scope.selectedItem = null;
+        getItems();
+    }else{
+        swal("Error updating item.", "", "error");
+    }
+});
+{% endhighlight %}
+
+The url passed depends on whether the item being saved has an existing id. If it doesn't, we can assume that this is a new item, and we pass it to our save REST endpoint. If it does, this item needs to be patched instead. Having some difficulty getting the data out of a PATCH request using Slim (the project's PHP microframework), I created a second POST endpoint for updating existing items. Technically for method I could simplify this down to just POST, but at some point in the future it would be best practice to switch over to a PATCH route for updating.
+
+The data being passed in is pretty straightforward, the image which has been bound to the variable `file` and the item data. The REST endpoints return a standard envelope with any errors, so if the errors are null then the item has been successfully saved/updated. 
+
+
+### Wrapping Up
+
+With that, the front-end code is complete. In the next post I'll talk about the server side code for receiving the image, doing image compression, and uploading to S3!
+
