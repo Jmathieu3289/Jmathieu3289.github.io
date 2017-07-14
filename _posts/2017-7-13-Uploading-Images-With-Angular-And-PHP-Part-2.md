@@ -86,7 +86,7 @@ Installing ImageMagick involved some slight modifications to the project's Docke
 {% highlight %}
 RUN apt-get update -y
 RUN apt-get install -y php-xml php-imagick
-{% highlight %}
+{% endhighlight %}
 
 Here, `apt-get update -y` ensures we reading the newest packages, and `php-xml' is required for `php-imagick`. Once installed, only 4 lines of code were needed to get up and running: 
 
