@@ -10,11 +10,11 @@ In the last post I went over the front end code for my image upload solution. Yo
 
 The API for this project is a standard REST framework, specifically SlimPHP. I like Slim because of it's low overhead and ease of set up. Getting the data from a POST request is straightforward. The first thing to do is to check the `$_FILES` array for the file I passed in earlier. 
 
-{% highlight PHP %}
+```php
 if(!empty($_FILES['file'])){
     $im = $_FILES['file']['tmp_name'];
 }
-{% endhighlight %}
+```
 
 Here, `tmp_name` is the filepath on the server to the uploaded image. Typically you could simply move this temporary file to a more permanent location on the server and pass back the final url to the application for storing in the DB with the associated product. In the beginning, this is exactly what I did. However after uploading a new version of the application to Elastic Beanstalk I had a realization that had me putting palm to face hard. The application is based on a docker configuration, meaning every time the EC2 instance is restarted/replaced, there goes all the data not associated with the docker image, including the images that have been uploaded.
 
@@ -24,17 +24,17 @@ It was time to move to a more permanent solution, instead uploading the images t
 
 To install the AWS sdk for PHP, I added the following to my composer.json file:
 
-{% highlight PHP %}
+```
 {
     "require": {
         "aws/aws-sdk-php": "^3.28"
     }
 }
-{% endhighlight %}
+```
 
 Once installed, configuration involves creating a configuration object and passing it as a parameter to a new instance of the SDK. After this, an S3 client can be created.
 
-{% highlight PHP %}
+```php
 $sharedConfig = [
         'region' => 'us-east-1',
         'version' => 'latest',
@@ -47,7 +47,7 @@ $sharedConfig = [
 $sdk = new Aws\Sdk($sharedConfig);
 
 $client = $sdk->createS3();
-{% endhighlight %}
+```
 
 In a production environment you would **absolutely not want to keep your key and secret in your main PHP file**, instead using EC2 environment variables. 
 
@@ -58,7 +58,7 @@ Once the client has been instantiated, it's time to upload the file.
 
 The S3 client object has a `putObject` method for handling image uploads, and requires a bucket, key, sourcefile, content type, and ACL.
 
-{% highlight PHP %}
+```php
 $result = $client->putObject([
     'Bucket' => 'website.com',
     'Key' => 'images/'.$_FILES['file']['name'],
@@ -66,7 +66,7 @@ $result = $client->putObject([
     'ContentType' => 'image/*',
     'ACL' => 'public-read'
 ]);
-{% endhighlight %}
+```
 
 In the above, I am storing the image in an S3 bucket I've created ahead of time named after the website. I want to store all images in a subfolder, images, which I've passed before the file name in the key. The sourcefile is the temporary file on the server, as mentioned above. `ContentType` lets S3 what type of file is being uploaded, and `ACL => 'public-read'` allows the file to be accessed publicly. 
 
@@ -83,20 +83,20 @@ After doing some research on image compression, I settled on using the PHP libra
 
 Installing ImageMagick involved some slight modifications to the project's Dockerfile:
 
-{% highlight %}
+```
 RUN apt-get update -y
 RUN apt-get install -y php-xml php-imagick
-{% endhighlight %}
+```
 
 Here, `apt-get update -y` ensures we reading the newest packages, and `php-xml' is required for `php-imagick`. Once installed, only 4 lines of code were needed to get up and running: 
 
-{% highlight PHP %}
+```php
 //Compress the image
 $im = new Imagick($_FILES['file']['tmp_name']);
 $im->setImageCompression(Imagick::COMPRESSION_JPEG);
 $im->setImageCompressionQuality(50);
 $im->writeImage();
-{% endhighlight %}
+```
 
 Here, we're taking the original temp file on the server, setting the image compression type (the only accepted file upload type is JPEG so we can ensure we're dealing with JPEGs), setting the compression quality, and then writing back the changes to the file.
 
