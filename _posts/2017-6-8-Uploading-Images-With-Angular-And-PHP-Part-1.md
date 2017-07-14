@@ -52,9 +52,13 @@ The second part was to set up a button which allows the user to choose a file fo
 There is a lot going on here, so I'll break down each part individually. Documentation can be found [here](https://github.com/danialfarid/ng-file-upload#file-select-and-drop).
 
 **`ngf-select`**   - Tells our program that this button will act as our choose file dialog activation.
+
 **`ng-model`**     - When the user chooses a file it will be bound to this variable.
+
 **`ngf-resize`**   - After choosing the file, applies some basic resizing/cropping/quality. Useful for doing quick image compression (although I'll talk more about that later).
+
 **`ngf-pattern`**  - Controls which file types are filtered in the open file dialog.
+
 **`ngf-accept`**   - Converts to the standard HTML accept attr.
 
 When a user selects a file, it now gets resized to 1000x1000 and displayed in the image tag automatically since we are binding to `file`. With that all out of the way it was time to move on to the file upload code.
