@@ -111,7 +111,7 @@ Queues have O(n) access time and O(1) insertion and deletion like stacks.
 
 A Hash Table is a data structure where each element is stored as a key/value pair, where looking up a given key will return the value. Hash tables are very good when speed is a requirement or when keys need to be something other than integer values. This is because hash tables make use of a hash function, which maps an object (of some type) to an integer. The downsides are they often come with much higher memory overhead, and hash functions can be prone to hash collisions, where the output of the hash function is the same for two different inputs. In Javascript every object is a simple hashmap that accepts strings as keys.
 
-```
+```javascript
 var sounds = [];
 sounds['cat'] = "Meow";
 sounds['dog'] = "Woof!";
