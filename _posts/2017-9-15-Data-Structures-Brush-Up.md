@@ -14,8 +14,9 @@ var a = [1,3,5,7,9];
 var b = a[1];
 console.log(b);
 ```
+output:
 ```
-output: 3
+3
 ```
 
 Arrays have O(1) access time and O(n) search and insertion, making them a good choice when fast access to a known index is needed over fast insertion or search.
@@ -52,6 +53,7 @@ back();
 back();
 back();
 ```
+output:
 ```
 Visiting: https://www.google.com
 Visiting: https://www.stackoverflow.com
@@ -90,6 +92,7 @@ A queue is a data structure where elements are inserted and removed in a first-i
  }
  console.log('Finished!');
 ```
+output:
 ```
 Walking tree...
 Searching a
@@ -114,6 +117,7 @@ sounds['cat'] = "Meow";
 sounds['dog'] = "Woof!";
 console.log("The dog goes " + a['dog']);
 ```
+output:
 ```
 The dog goes Woof!
 ```
